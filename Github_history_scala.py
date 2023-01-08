@@ -1,15 +1,16 @@
 # Importing pandas
 import pandas as pd
+import matplotlib.pyplot as plt
 
 # Loading in the data
-pulls_one = pd.read_csv('pulls_2011-2013.csv')
-pulls_two = pd.read_csv('pulls_2014-2018.csv')
-pull_files =pd.read_csv('pull_files.csv')
+pulls_one = pd.read_csv('/Users/abhinavpundir/Desktop/Studies/Data Science/Examining Netflix Movies/pulls_2011-2013.csv')
+pulls_two = pd.read_csv('/Users/abhinavpundir/Desktop/Studies/Data Science/Examining Netflix Movies/pulls_2014-2018.csv')
+pull_files =pd.read_csv('/Users/abhinavpundir/Desktop/Studies/Data Science/Examining Netflix Movies/pull_files.csv')
 # Append pulls_one to pulls_two
 pulls =pulls_two.append(pulls_one)
 
 # Convert the date for the pulls object
-pulls['date'] = pulls['date'].to_datetime()
+pulls['date'] = pd.to_datetime(pulls['date'])
 # Merge the two DataFrames
 data =pulls.merge(pull_files,on='pid')
 data['month'] = data['date'].dt.month
@@ -87,3 +88,4 @@ by_file_wide = grouped.pivot_table(index='date',columns='user',values='pid',fill
 
 # Plot the results
 by_file_wide.plot(kind='bar')
+plt.show()
